@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Books libraries</h1>
+
+<div id="books_libraries">
+  <% @books_libraries.each do |books_library| %>
+    <%= render books_library %>
+    <p>
+      <%= link_to "Show this books libraries", books_library %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New books libraries", new_books_library_path %>

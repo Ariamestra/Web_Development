@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Authors & Books</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+
+<h1> Authors </h1>
+
+<div id="PersonList">
+  <div v-for="book in books">
+    <h3>{{ book.person.name }}</h3>
+    <p>Email: {{ book.person.email }}</p>
+    <p>Phone: {{ book.person.phone }}</p>
+    <p>Address: {{ book.person.address }}</p>
+    <p>Library Card: {{ book.person.library_card }}</p>
+    <p>Books Authored:</p>
+    <ul>
+      <li>
+        {{ book.title }} by {{ book.person.name }} - {{ book.isbn }}
+        
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+new Vue({
+  el: '#PersonList',
+  data: {
+    books: []
+  },
+  methods: {
+    fetchBooks: function() {
+      fetch('http://localhost:3000/books.json')
+        .then(response => response.json())
+        .then(json => {
+          this.books = json;
+        })
+        .catch(error => console.log(error));
+    },
+    deleteBook: function(id) {
+      fetch('http://localhost:3000/books/' + id + '.json', {
+        method: 'DELETE'
+      })
+      .then(this.fetchBooks) 
+      .catch(error => console.log(error));
+    }
+    // Add things
+  },
+  mounted: function() {
+    this.fetchBooks();
+  }
+});
+
+</script>
+</body>
+</html>

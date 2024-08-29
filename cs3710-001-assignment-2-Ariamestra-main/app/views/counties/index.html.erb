@@ -1,0 +1,17 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Counties</h1>
+<ul>
+  <% @counties.each do |county| %>
+    <li>
+      <%= county.name %>
+      <ul>
+        <% county.libraries.each do |library| %>
+          <li><%= library.name %></li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New county", new_county_path %>

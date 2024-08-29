@@ -1,0 +1,47 @@
+<%= form_with(model: library) do |form| %>
+  <% if library.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(library.errors.count, "error") %> prohibited this library from being saved:</h2>
+
+      <ul>
+        <% library.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :address, style: "display: block" %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div>
+    <%= form.label :telephone, style: "display: block" %>
+    <%= form.text_field :telephone %>
+  </div>
+
+  <div>
+    <%= form.label :county_id, "County", style: "display: block" %>
+    <%= form.collection_select(:county_id, County.all, :id, :name) %>
+  </div>
+
+  <div>
+    <%= form.label :book_id, "Book(s)", style: "display: block" %>
+    <% Book.all.each do |book| %>
+      <label>
+        <%= check_box_tag 'library[book_ids][]', book.id, @library.books.include?(book) %>
+        <%= book.title %>
+      </label>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
